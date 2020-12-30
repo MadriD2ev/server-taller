@@ -1,10 +1,27 @@
 const { db } = require('../config/database')
 
 exports.index = async (req, res) => {
-  try {
-    const response = await db.query('SELECT * FROM categories', {
-      type: db.QueryTypes.SELECT
+  try {      
+    // const response = await db.query('SELECT * FROM categories', {
+    //   type: db.QueryTypes.SELECT
+    // })
+
+    const respuesta = await axios.post("api/read", {
+      queries: [
+        {
+          query: 'SELECT * FROM categories'
+        },
+        {
+          query: ""
+        },
+        {
+          query: ""
+        }       
+      ]
     })
+
+    
+
 
     res.json(response)
   } catch (error) {
@@ -84,7 +101,7 @@ exports.delete = async (req, res) => {
       }
     })
 
-    res.json(response)
+    res.json({ message: 'categorie deleted'})
   } catch (error) {
     console.log(error)
   }
